@@ -32,17 +32,18 @@ You can check these manifests yourself:
 $ crane manifest docker.io/imjasonh/data | jq
 {
   "schemaVersion": 2,
+  "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
   "config": {
     "mediaType": "application/vnd.docker.container.image.v1+json",
     "size": 233,
-    "digest": "sha256:9ad623f2020d10bb7c6f432bea337a91225de1e2bd2b282d2fb7df7ed8ffcfc6"
+    "digest": "sha256:5c6252906e515b45399e41fda0307669c92e15d7745ea0d49670fe37c5c1b568"
   },
   "layers": [
     {
-      "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-      "size": 10,
-      "digest": "sha256:537f3fb69ba01fc388a3a5c920c485b2873d5f327305c3dd2004d6a04451659b",
-      "data": "Li4uLi4uLi4uLg=="
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": 5,
+      "digest": "sha256:2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+      "data": "aGVsbG8="
     }
   ]
 }
