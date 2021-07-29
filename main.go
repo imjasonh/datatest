@@ -7,6 +7,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"strings"
 
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
@@ -17,9 +18,11 @@ import (
 	"github.com/google/go-containerregistry/pkg/v1/types"
 )
 
-var r = flag.String("ref", "gcr.io/imjasonh/data", "ref to push to")
-
-// TODO flags for mediaType, size
+var (
+	r    = flag.String("ref", "gcr.io/imjasonh/data", "ref to push to")
+	oci  = flag.Bool("oci", false, "if true, push as OCI image")
+	size = flag.Int("size", 10, "size of bytes to send")
+)
 
 func main() {
 	flag.Parse()
@@ -29,9 +32,17 @@ func main() {
 		log.Fatal(err)
 	}
 
-	img, err := mutate.AppendLayers(empty.Image, &staticLayer{
-		b:  []byte("hello"),
-		mt: types.DockerLayer,
+	var img v1.Image = empty.Image
+	if *oci {
+		img = mutate.MediaType(img, types.OCIManifestSchema1)
+	}
+	mt := types.DockerLayer
+	if *oci {
+		mt = types.OCILayer
+	}
+	img, err = mutate.AppendLayers(img, &staticLayer{
+		b:  []byte(strings.Repeat(".", *size)),
+		mt: mt,
 	})
 	if err != nil {
 		log.Fatal(err)
