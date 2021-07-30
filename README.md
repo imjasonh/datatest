@@ -25,6 +25,9 @@ $ go run ./ -help
 - gcr.io/imjasonh/data
 - quay.io/imjasonh/data
 - docker.io/imjasonh/data
+- ghcr.io/dlorenc/signed-container:foo
+- registry.digitalocean.com/dlorenc/test:foo
+- bundle.bar/u/danlorenc/test:v1
 
 You can check these manifests yourself:
 
