@@ -1,6 +1,7 @@
 package main
 
 import (
+	"archive/tar"
 	"bytes"
 	"flag"
 	"fmt"
@@ -40,8 +41,25 @@ func main() {
 	if *oci {
 		mt = types.OCILayer
 	}
+
+	var buf bytes.Buffer
+	tw := tar.NewWriter(&buf)
+	if err := tw.WriteHeader(&tar.Header{
+		Name: "hello.txt",
+		Mode: 0600,
+		Size: int64(*size),
+	}); err != nil {
+		log.Fatal(err)
+	}
+	if _, err := tw.Write([]byte(strings.Repeat(".", *size))); err != nil {
+		log.Fatal(err)
+	}
+	if err := tw.Close(); err != nil {
+		log.Fatal(err)
+	}
+
 	img, err = mutate.AppendLayers(img, &staticLayer{
-		b:  []byte(strings.Repeat(".", *size)),
+		b:  buf.Bytes(),
 		mt: mt,
 	})
 	if err != nil {
