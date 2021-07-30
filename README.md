@@ -28,6 +28,7 @@ $ go run ./ -help
 - ghcr.io/dlorenc/signed-container:foo
 - registry.digitalocean.com/dlorenc/test:foo
 - bundle.bar/u/danlorenc/test:v1
+- dlorenctest2.azurecr.io/test:foo
 
 You can check these manifests yourself:
 
